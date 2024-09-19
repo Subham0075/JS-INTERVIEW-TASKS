@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alphabet Sequence Generator</title>
+</head>
+<body>
+
+  <h1>Alphabet Sequence Generator</h1>
+
+  <!-- Input for limit and button to generate the sequence -->
+  <label for="limit">Enter the number of patterns to generate:</label>
+  <input type="number" id="limit" placeholder="Enter a limit" />
+  <button onclick="displayAlphabet()">Generate Sequence</button>
+
+  <!-- Area to display the result -->
+  <pre id="alphabetResult"></pre>
+
+  <script>
+    // Function to generate the alphabet sequence up to the specified limit
+    function generateAlphabetSequence(limit) {
+      const alphabet = "abcdefghijklmnopqrstuvwxyz";
+      const result = [];
+
+      // Step 1: Add single letters 'a' to 'z'
+      for (let i = 0; i < alphabet.length; i++) {
+        result.push(alphabet[i]);
+        // Stop if we reach the limit
+        if (result.length >= limit) {
+          return result;
+        }
+      }
+
+      // Step 2: Add two-letter combinations, like 'aa', 'ab', ..., 'zz'
+      for (let i = 0; i < alphabet.length; i++) {
+        for (let j = 0; j < alphabet.length; j++) {
+          result.push(alphabet[i] + alphabet[j]);
+          // Stop if we reach the limit
+          if (result.length >= limit) {
+            return result;
+          }
+        }
+      }
+
+      // Return the generated sequence
+      return result;
+    }
+
+    // Function to display the alphabet sequence based on user input
+    function displayAlphabet() {
+      // Get the input value from the text box (convert it to a number)
+      const limit = parseInt(document.getElementById('limit').value);
+      
+      // Ensure a valid limit is provided
+      if (isNaN(limit) || limit <= 0) {
+        document.getElementById('alphabetResult').textContent = "Please enter a valid number greater than 0.";
+        return;
+      }
+
+      // Generate the alphabet sequence with the given limit
+      const alphabetSequence = generateAlphabetSequence(limit);
+      
+      // Display the result in the <pre> element
+      document.getElementById('alphabetResult').textContent = JSON.stringify(alphabetSequence, null, 2);
+    }
+  </script>
+
+</body>
+</html>
